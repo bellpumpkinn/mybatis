@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='ch03.ex01.Map'>
+	<!-- 과제] selectUsers statement를 기술하라. 
+	resultMap을 사용하라. address는 무시한다. -->
+	<select id='selectUsers' resultMap='userMap'>
+		select user_id, user_name, reg_date
+		from users
+		order by user_id
+	</select>
+	
+	<select id='selectAddress' resultType='address'>
+		select address
+		from addresses
+		where user_id = #{userId}
+	</select>
+	
+	<resultMap id='userMap' type='myUser'>
+		<id property='userId' column='user_id'/>
+		<result property='userName' column='user_name'/>
+		<result property='regDate' column='reg_date'/>
+		<association property='address' column='user_id' select='selectAddress'/>
+	</resultMap>
+</mapper>
+
+<!-- usermap실행되면 resultmap을 콜해서 
+실행되고 맨마지막줄에 select실행되면 select를 콜해서 select가 실행된다. 
+association을 통해서 has a 관계를 만듬-->
+
+<!-- 
+
+selectUser - 특정 객체찾기 / Map 인터페이스의 selecterUser 동일하게 적어줌
+id = 메서드명, resultType = 리턴, parameterType = 매개변수 ( 여기선 매개변수가 없어서 생략 )
+<select id='selectUsers' resultType = 'user'>
+
+지금은 따로따로 객체를 생성한거.
+ -->

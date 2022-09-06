@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='ch02.ex02.Map'>
+	<select id='selectUser' resultMap='userMap'> 
+		select user_id, user_name, reg_date
+		from users
+		where user_id = #{userId}
+	</select>
+	
+	<select id='selectUser2' resultMap='userMap'>
+		select user_id, user_name, reg_date
+		from users
+		where user_name = #{userName}
+	</select>
+	
+	<select id='selectUser3' resultMap='userMap'>
+		select user_id, user_name, reg_date
+		from users
+		where reg_date = #{regDate}
+	</select>
+	
+	<resultMap id='userMap' type='user'>
+		<id property='userId' column='user_id'/>
+		<result property='userName' column='user_name'/>
+		<result property='regDate' column='reg_date'/>
+	</resultMap>
+</mapper>
+
+<!-- 
+
+selectUser - 특정 객체찾기 / Map 인터페이스의 selecterUser 동일하게 적어줌
+id = 메서드명, resultType = 리턴, parameterType = 매개변수 ( 여기선 매개변수가 없어서 생략 )
+<select id='selectUsers' resultType = 'user'>
+
+ -->
